@@ -24,10 +24,7 @@ def cat_list(request):
 
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def cat_detail(request, pk):
-    try:
-        cat = Cat.objects.get(pk=pk)
-    except Cat.DoesNotExist:
-        return Response({'detail': 'Cat not found.'}, status=status.HTTP_404_NOT_FOUND)
+    cat = get_object_or_404(Cat, pk=pk)
 
     if request.method == 'PUT':
         serializer = CatSerializer(cat, data=request.data)
